@@ -110,7 +110,7 @@ public class CreditCardPaymentStrategyTests
         // Assert
         Assert.NotNull(response.ConfirmationCode);
         Assert.Equal("Paid with Credit Card Payment", response.ConfirmationMessage);
-        Assert.Equal(request.PaymentMethod, response.PaymentMethod);
+        Assert.Equal(PaymentMethod.CreditCard, response.PaymentMethod);
         Assert.NotNull(response.PaidAt);
     }
 }

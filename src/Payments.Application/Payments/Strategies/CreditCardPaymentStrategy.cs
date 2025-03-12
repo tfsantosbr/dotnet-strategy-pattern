@@ -6,6 +6,8 @@ namespace Payments.Application.Payments.Strategies;
 
 public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger) : IPaymentStrategy
 {
+    public PaymentMethod PaymentMethod => PaymentMethod.CreditCard;
+
     public Task<PaymentResponse> Pay(PaymentRequest request)
     {
         var creditCardPaymentRequest = request as CreditCardPaymentRequest
@@ -39,7 +41,7 @@ public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
             ConfirmationMessage: "Paid with Credit Card Payment",
-            PaymentMethod: creditCardPaymentRequest.PaymentMethod,
+            PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
         return Task.FromResult(response);

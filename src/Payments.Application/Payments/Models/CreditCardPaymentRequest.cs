@@ -6,4 +6,4 @@ public record CreditCardPaymentRequest(
     int ExpirationYear,
     int Cvv,
     decimal Amount)
-    : PaymentRequest(Amount, PaymentMethod.CreditCard);
+    : PaymentRequest(Amount);

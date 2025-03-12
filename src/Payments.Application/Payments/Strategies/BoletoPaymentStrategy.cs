@@ -6,6 +6,8 @@ namespace Payments.Application.Payments.Strategies;
 
 public class BoletoPaymentStrategy(ILogger<BoletoPaymentStrategy> logger) : IPaymentStrategy
 {
+    public PaymentMethod PaymentMethod => PaymentMethod.Boleto;
+
     public Task<PaymentResponse> Pay(PaymentRequest request)
     {
         var boletoPaymentRequest = request as BoletoPaymentRequest
@@ -30,7 +32,7 @@ public class BoletoPaymentStrategy(ILogger<BoletoPaymentStrategy> logger) : IPay
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
             ConfirmationMessage: "Paid with Boleto Payment",
-            PaymentMethod: boletoPaymentRequest.PaymentMethod,
+            PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
         return Task.FromResult(response);

@@ -6,6 +6,8 @@ namespace Payments.Application.Payments.Strategies;
 
 public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentStrategy
 {
+    public PaymentMethod PaymentMethod => PaymentMethod.Pix;
+
     public Task<PaymentResponse> Pay(PaymentRequest request)
     {
         var pixPaymentRequest = request as PixPaymentRequest
@@ -25,7 +27,7 @@ public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentSt
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
             ConfirmationMessage: "Paid with Pix Payment",
-            PaymentMethod: pixPaymentRequest.PaymentMethod,
+            PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
         return Task.FromResult(response);
