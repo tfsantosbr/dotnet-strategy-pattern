@@ -40,7 +40,7 @@ public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger
 
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
-            ConfirmationMessage: "Paid with Credit Card Payment",
+            Message: "Paid with Credit Card Payment",
             PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
@@ -51,7 +51,7 @@ public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger
     {
         var response = new PaymentResponse(
             ConfirmationCode: null,
-            ConfirmationMessage: errorMessage,
+            Message: errorMessage,
             PaymentMethod: null,
             PaidAt: null);
 

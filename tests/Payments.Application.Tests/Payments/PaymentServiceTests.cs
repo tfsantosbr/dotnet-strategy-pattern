@@ -25,7 +25,7 @@ public class PaymentServiceTests
         
         var expectedResponse = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
-            ConfirmationMessage: "Paid with Credit Card Payment", 
+            Message: "Paid with Credit Card Payment", 
             PaymentMethod: PaymentMethod.CreditCard,
             PaidAt: DateTime.UtcNow);
 
@@ -40,7 +40,7 @@ public class PaymentServiceTests
 
         // Assert
         Assert.NotNull(response);
-        Assert.Equal(expectedResponse.ConfirmationMessage, response.ConfirmationMessage);
+        Assert.Equal(expectedResponse.Message, response.Message);
         Assert.Equal(expectedResponse.PaymentMethod, response.PaymentMethod);
     }
 

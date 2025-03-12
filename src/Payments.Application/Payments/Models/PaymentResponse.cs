@@ -2,6 +2,6 @@
 
 public record PaymentResponse(
     Guid? ConfirmationCode,
-    string ConfirmationMessage,
+    string Message,
     PaymentMethod? PaymentMethod,
     DateTime? PaidAt);

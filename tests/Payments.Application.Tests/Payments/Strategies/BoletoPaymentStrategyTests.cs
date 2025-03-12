@@ -17,16 +17,16 @@ namespace Payments.Application.Tests.Payments.Strategies
         }
 
         [Fact]
-        public void Pay_ShouldThrowArgumentException_WhenRequestIsNotBoletoPaymentRequest()
+        public async Task Pay_ShouldThrowArgumentException_WhenRequestIsNotBoletoPaymentRequest()
         {
             // Arrange
             var invalidRequest = new PixPaymentRequest("valid-pix-key", 100);
 
             // Act
-            var exception = Assert.ThrowsAsync<ArgumentException>(() => _strategy.Pay(invalidRequest));
+            var exception = await Assert.ThrowsAsync<ArgumentException>(() => _strategy.Pay(invalidRequest));
             
             // Assert
-            Assert.Equal("Invalid request type for Boleto Payment.", exception.Result.Message);
+            Assert.Equal("Invalid request type for Boleto Payment.", exception.Message);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Payments.Application.Tests.Payments.Strategies
             var response = await _strategy.Pay(request);
 
             Assert.Null(response.ConfirmationCode);
-            Assert.Equal("Barcode is required", response.ConfirmationMessage);
+            Assert.Equal("Barcode is required", response.Message);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Payments.Application.Tests.Payments.Strategies
             var response = await _strategy.Pay(request);
 
             Assert.Null(response.ConfirmationCode);
-            Assert.Equal("Invalid Due Date", response.ConfirmationMessage);
+            Assert.Equal("Invalid Due Date", response.Message);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Payments.Application.Tests.Payments.Strategies
             var response = await _strategy.Pay(request);
 
             Assert.Null(response.ConfirmationCode);
-            Assert.Equal("Invalid Amount", response.ConfirmationMessage);
+            Assert.Equal("Invalid Amount", response.Message);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace Payments.Application.Tests.Payments.Strategies
             var response = await _strategy.Pay(request);
 
             Assert.NotNull(response.ConfirmationCode);
-            Assert.Equal("Paid with Boleto Payment", response.ConfirmationMessage);
+            Assert.Equal("Paid with Boleto Payment", response.Message);
             Assert.Equal(PaymentMethod.Boleto, response.PaymentMethod);
             Assert.NotNull(response.PaidAt);
         }

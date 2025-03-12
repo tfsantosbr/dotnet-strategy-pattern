@@ -11,6 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{18E67C69
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Application.Tests", "tests\Payments.Application.Tests\Payments.Application.Tests.csproj", "{B3F5D4F6-F207-4F11-9ABB-741FA2CBF3FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Api", "src\Payments.Api\Payments.Api.csproj", "{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36FEC464-AD27-4979-BB3D-E5DF55DB01AA}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +35,14 @@ Global
 		{B3F5D4F6-F207-4F11-9ABB-741FA2CBF3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F5D4F6-F207-4F11-9ABB-741FA2CBF3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F5D4F6-F207-4F11-9ABB-741FA2CBF3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79018284-3701-4617-9848-C0947F05F527} = {3704FADB-E791-4F6F-A8DE-DBE700DCADA8}
 		{B3F5D4F6-F207-4F11-9ABB-741FA2CBF3FA} = {18E67C69-0005-43A5-A39B-BC6B0BB36578}
+		{3D3567FB-8211-4DC5-B7B7-C7E75AC2289E} = {3704FADB-E791-4F6F-A8DE-DBE700DCADA8}
 	EndGlobalSection
 EndGlobal

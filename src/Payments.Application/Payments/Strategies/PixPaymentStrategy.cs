@@ -26,7 +26,7 @@ public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentSt
 
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
-            ConfirmationMessage: "Paid with Pix Payment",
+            Message: "Paid with Pix Payment",
             PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
@@ -37,7 +37,7 @@ public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentSt
     {
         var response = new PaymentResponse(
             ConfirmationCode: null,
-            ConfirmationMessage: errorMessage,
+            Message: errorMessage,
             PaymentMethod: null,
             PaidAt: null);
 

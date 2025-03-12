@@ -16,16 +16,16 @@ public class CreditCardPaymentStrategyTests
     }
 
     [Fact]
-    public void Pay_ShouldThrowArgumentException_WhenRequestIsNotCreditCardPaymentRequest()
+    public async Task Pay_ShouldThrowArgumentException_WhenRequestIsNotCreditCardPaymentRequest()
     {
         // Arrange
         var invalidRequest = new PixPaymentRequest("valid-pix-key", 100);
 
         // Act
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _creditCardPaymentStrategy.Pay(invalidRequest));
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _creditCardPaymentStrategy.Pay(invalidRequest));
             
         // Assert
-        Assert.Equal("Invalid request type for Credit Card Payment.", exception.Result.Message);
+        Assert.Equal("Invalid request type for Credit Card Payment.", exception.Message);
     }
     
     [Fact]
@@ -39,7 +39,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Card Number is required", response.ConfirmationMessage);
+        Assert.Equal("Card Number is required", response.Message);
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Expiration Month is out of range", response.ConfirmationMessage);
+        Assert.Equal("Expiration Month is out of range", response.Message);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Invalid Expiration Year", response.ConfirmationMessage);
+        Assert.Equal("Invalid Expiration Year", response.Message);
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Invalid CVV", response.ConfirmationMessage);
+        Assert.Equal("Invalid CVV", response.Message);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Invalid Amount", response.ConfirmationMessage);
+        Assert.Equal("Invalid Amount", response.Message);
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public class CreditCardPaymentStrategyTests
 
         // Assert
         Assert.NotNull(response.ConfirmationCode);
-        Assert.Equal("Paid with Credit Card Payment", response.ConfirmationMessage);
+        Assert.Equal("Paid with Credit Card Payment", response.Message);
         Assert.Equal(PaymentMethod.CreditCard, response.PaymentMethod);
         Assert.NotNull(response.PaidAt);
     }

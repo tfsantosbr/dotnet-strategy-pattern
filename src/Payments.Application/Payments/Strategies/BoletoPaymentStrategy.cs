@@ -31,7 +31,7 @@ public class BoletoPaymentStrategy(ILogger<BoletoPaymentStrategy> logger) : IPay
 
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
-            ConfirmationMessage: "Paid with Boleto Payment",
+            Message: "Paid with Boleto Payment",
             PaymentMethod: PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
@@ -42,7 +42,7 @@ public class BoletoPaymentStrategy(ILogger<BoletoPaymentStrategy> logger) : IPay
     {
         var response = new PaymentResponse(
             ConfirmationCode: null,
-            ConfirmationMessage: errorMessage,
+            Message: errorMessage,
             PaymentMethod: null,
             PaidAt: null);
 

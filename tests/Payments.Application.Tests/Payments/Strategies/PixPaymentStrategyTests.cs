@@ -16,16 +16,16 @@ public class PixPaymentStrategyTests
     }
 
     [Fact]
-    public void Pay_ShouldThrowArgumentException_WhenRequestIsNotPixPaymentRequest()
+    public async Task Pay_ShouldThrowArgumentException_WhenRequestIsNotPixPaymentRequest()
     {
         // Arrange
         var invalidRequest = new BoletoPaymentRequest(DateTime.UtcNow, "valid-bar-code", 100);
 
         // Act
-        var exception = Assert.ThrowsAsync<ArgumentException>(() => _pixPaymentStrategy.Pay(invalidRequest));
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _pixPaymentStrategy.Pay(invalidRequest));
 
         // Assert
-        Assert.Equal("Invalid request type for Pix Payment.", exception.Result.Message);
+        Assert.Equal("Invalid request type for Pix Payment.", exception.Message);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class PixPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Key is required", response.ConfirmationMessage);
+        Assert.Equal("Key is required", response.Message);
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class PixPaymentStrategyTests
 
         // Assert
         Assert.Null(response.ConfirmationCode);
-        Assert.Equal("Invalid Amount", response.ConfirmationMessage);
+        Assert.Equal("Invalid Amount", response.Message);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class PixPaymentStrategyTests
 
         // Assert
         Assert.NotNull(response.ConfirmationCode);
-        Assert.Equal("Paid with Pix Payment", response.ConfirmationMessage);
+        Assert.Equal("Paid with Pix Payment", response.Message);
         Assert.Equal(PaymentMethod.Pix, response.PaymentMethod);
         Assert.NotNull(response.PaidAt);
     }
