@@ -1,6 +1,41 @@
-@Payments.Api_HostAddress = http://localhost:5220
+@hostUrl = http://localhost:5220
 
-GET {{Payments.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Teste de Pagamento com Boleto
+POST {{hostUrl}}/payments
+Content-Type: application/json
 
-###
+{
+  "PaymentMethod": "Boleto",
+  "Amount": 100.00,
+  "BoletoPaymentData": {
+    "DueDate": "2025-12-31T00:00:00Z",
+    "BarCode": "12345678901234567890123456789012345678901234"
+  }
+}
+
+### Teste de Pagamento com Cartão de Crédito
+POST {{hostUrl}}/payments
+Content-Type: application/json
+
+{
+  "PaymentMethod": "CreditCard",
+  "Amount": 150.00,
+  "CreditCardPaymentData": {
+    "CardNumber": "4111111111111111",
+    "ExpirationMonth": 12,
+    "ExpirationYear": 2035,
+    "Cvv": 123
+  }
+}
+
+### Teste de Pagamento com Pix
+POST {{hostUrl}}/payments
+Content-Type: application/json
+
+{
+  "PaymentMethod": "Pix",
+  "Amount": 200.00,
+  "PixPaymentData": {
+    "Key": "pixkey@example.com"
+  }
+}
