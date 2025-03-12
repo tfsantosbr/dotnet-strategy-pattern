@@ -16,6 +16,19 @@ public class CreditCardPaymentStrategyTests
     }
 
     [Fact]
+    public void Pay_ShouldThrowArgumentException_WhenRequestIsNotCreditCardPaymentRequest()
+    {
+        // Arrange
+        var invalidRequest = new PixPaymentRequest("valid-pix-key", 100);
+
+        // Act
+        var exception = Assert.ThrowsAsync<ArgumentException>(() => _creditCardPaymentStrategy.Pay(invalidRequest));
+            
+        // Assert
+        Assert.Equal("Invalid request type for Credit Card Payment.", exception.Result.Message);
+    }
+    
+    [Fact]
     public async Task Pay_ShouldReturnError_WhenCardNumberIsNull()
     {
         // Arrange

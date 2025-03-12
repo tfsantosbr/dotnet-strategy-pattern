@@ -4,40 +4,42 @@ using Payments.Application.Payments.Models;
 
 namespace Payments.Application.Payments.Strategies;
 
-public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger)
-    : IPaymentStrategy<CreditCardPaymentRequest>
+public class CreditCardPaymentStrategy(ILogger<CreditCardPaymentStrategy> logger) : IPaymentStrategy
 {
-    public Task<PaymentResponse> Pay(CreditCardPaymentRequest request)
+    public Task<PaymentResponse> Pay(PaymentRequest request)
     {
-        if (string.IsNullOrEmpty(request.CardNumber))
+        var creditCardPaymentRequest = request as CreditCardPaymentRequest
+                                       ?? throw new ArgumentException("Invalid request type for Credit Card Payment.");
+
+        if (string.IsNullOrEmpty(creditCardPaymentRequest.CardNumber))
             return CreateErrorResponse("Card Number is required");
 
-        if (request.ExpirationMonth is < 1 or > 12)
+        if (creditCardPaymentRequest.ExpirationMonth is < 1 or > 12)
             return CreateErrorResponse("Expiration Month is out of range");
 
-        if (request.ExpirationYear < DateTime.Now.Year)
+        if (creditCardPaymentRequest.ExpirationYear < DateTime.Now.Year)
             return CreateErrorResponse("Invalid Expiration Year");
 
-        if (request.Cvv is < 100 or > 999)
+        if (creditCardPaymentRequest.Cvv is < 100 or > 999)
             return CreateErrorResponse("Invalid CVV");
-        
-        if (request.Amount < 0)
+
+        if (creditCardPaymentRequest.Amount < 0)
             return CreateErrorResponse("Invalid Amount");
 
         logger.LogInformation(
             "Paid with Credit Card Payment - CardNumber {CardNumber}, Expiration: {ExpirationMonth}/{ExpirationYear}" +
             ", CVV: {Cvv}, Amount: {Amount} ",
-            request.CardNumber,
-            request.ExpirationMonth,
-            request.ExpirationYear,
-            request.Cvv,
-            request.Amount
+            creditCardPaymentRequest.CardNumber,
+            creditCardPaymentRequest.ExpirationMonth,
+            creditCardPaymentRequest.ExpirationYear,
+            creditCardPaymentRequest.Cvv,
+            creditCardPaymentRequest.Amount
         );
 
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
             ConfirmationMessage: "Paid with Credit Card Payment",
-            PaymentMethod: request.PaymentMethod,
+            PaymentMethod: creditCardPaymentRequest.PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
         return Task.FromResult(response);

@@ -4,22 +4,28 @@ using Payments.Application.Payments.Models;
 
 namespace Payments.Application.Payments.Strategies;
 
-public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentStrategy<PixPaymentRequest>
+public class PixPaymentStrategy(ILogger<PixPaymentStrategy> logger) : IPaymentStrategy
 {
-    public Task<PaymentResponse> Pay(PixPaymentRequest request)
+    public Task<PaymentResponse> Pay(PaymentRequest request)
     {
-        if (string.IsNullOrEmpty(request.Key))
+        var pixPaymentRequest = request as PixPaymentRequest
+                                ?? throw new ArgumentException("Invalid request type for Pix Payment.");
+
+        if (string.IsNullOrEmpty(pixPaymentRequest.Key))
             return CreateErrorResponse("Key is required");
         
-        if (request.Amount < 0)
+        if (pixPaymentRequest.Amount < 0)
             return CreateErrorResponse("Invalid Amount");
         
-        logger.LogInformation("Paid with Pix Payment - Key {Key}, Amount: {Amount} ", request.Key, request.Amount);
+        logger.LogInformation("Paid with Pix Payment - Key {Key}, Amount: {Amount} ", 
+            pixPaymentRequest.Key, 
+            pixPaymentRequest.Amount
+            );
 
         var response = new PaymentResponse(
             ConfirmationCode: Guid.NewGuid(),
             ConfirmationMessage: "Paid with Pix Payment",
-            PaymentMethod: request.PaymentMethod,
+            PaymentMethod: pixPaymentRequest.PaymentMethod,
             PaidAt: DateTime.UtcNow);
 
         return Task.FromResult(response);

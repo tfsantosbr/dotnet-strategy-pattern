@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Payments.Application.Payments.Models;
 using Payments.Application.Payments.Strategies;
+using Xunit;
 
 namespace Payments.Application.Tests.Payments.Strategies
 {
@@ -13,6 +14,19 @@ namespace Payments.Application.Tests.Payments.Strategies
         {
             var logger = Substitute.For<ILogger<BoletoPaymentStrategy>>();
             _strategy = new BoletoPaymentStrategy(logger);
+        }
+
+        [Fact]
+        public void Pay_ShouldThrowArgumentException_WhenRequestIsNotBoletoPaymentRequest()
+        {
+            // Arrange
+            var invalidRequest = new PixPaymentRequest("valid-pix-key", 100);
+
+            // Act
+            var exception = Assert.ThrowsAsync<ArgumentException>(() => _strategy.Pay(invalidRequest));
+            
+            // Assert
+            Assert.Equal("Invalid request type for Boleto Payment.", exception.Result.Message);
         }
 
         [Fact]

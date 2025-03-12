@@ -2,8 +2,7 @@
 
 namespace Payments.Application.Payments.Abstractions;
 
-public interface IPaymentStrategy<in TRequest>
-    where TRequest : PaymentRequest 
+public interface IPaymentStrategy
 {
-    Task<PaymentResponse> Pay(TRequest request);
-}   
+    Task<PaymentResponse> Pay(PaymentRequest request);
+}

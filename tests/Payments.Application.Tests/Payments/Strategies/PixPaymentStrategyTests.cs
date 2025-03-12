@@ -16,6 +16,19 @@ public class PixPaymentStrategyTests
     }
 
     [Fact]
+    public void Pay_ShouldThrowArgumentException_WhenRequestIsNotPixPaymentRequest()
+    {
+        // Arrange
+        var invalidRequest = new BoletoPaymentRequest(DateTime.UtcNow, "valid-bar-code", 100);
+
+        // Act
+        var exception = Assert.ThrowsAsync<ArgumentException>(() => _pixPaymentStrategy.Pay(invalidRequest));
+
+        // Assert
+        Assert.Equal("Invalid request type for Pix Payment.", exception.Result.Message);
+    }
+
+    [Fact]
     public async Task Pay_ShouldReturnError_WhenKeyIsNull()
     {
         // Arrange
